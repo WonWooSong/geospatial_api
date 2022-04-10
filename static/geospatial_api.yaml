@@ -1,0 +1,87 @@
+openapi: 3.0.1
+info:
+  title: Geospatial Realestate API
+  description: 'This is a very simple Geospacial API that contaions realestate house information'
+  
+  version: 1.0.0
+
+tags:
+- name: House
+  description: Realestate house information with geolocation data
+
+paths:
+  /house:
+    get:
+      tags:
+      - House
+      summary: Get all realestate house information
+      responses:
+        default:
+          description: successful operation
+          content: {}
+    post:
+      tags:
+      - House
+      summary: Add a new house information for realestate
+      operationId: addHouse
+      requestBody:
+        description: Create house information for realestate
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/House'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/House'
+        required: true
+      responses:
+        405:
+          description: Invalid input
+          content: {}
+
+      x-codegen-request-body-name: body
+ 
+components:
+  schemas:
+    Geometry:
+      type: object
+      properties:
+        type:
+          type: string
+          example: Point
+        latitude:
+          type: number
+          example: 43.2849777
+        longitude:
+          type: number
+          example: 43.2849777
+
+      xml:
+        name: Category
+ 
+    House:
+      required:
+      - type
+      - latitude
+      - longitude
+      - address
+      - bed_num
+      - bath_num
+      type: object
+      properties:
+
+        geometry:
+          $ref: '#/components/schemas/Geometry'
+        address:
+          type: string
+          example: 10d95 W Pender St, Vancouver, BC V6E 2M6
+
+
+        bed:
+          type: integer
+          example: 3
+        bath:
+          type: integer
+          example: 2
+      xml:
+        name: House
